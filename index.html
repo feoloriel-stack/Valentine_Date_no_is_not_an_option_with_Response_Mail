@@ -1,302 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Be My Valentine 💘</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You 💌</title>
 
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap"
-        rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-    <!-- Confetti -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Poppins",sans-serif;
+    background:linear-gradient(-45deg,#ff9a9e,#fad0c4,#fbc2eb,#a18cd1);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+    overflow:hidden;
+}
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-            background-size: 400% 400%;
-            animation: bgMove 12s ease infinite;
-            font-family: "Poppins", sans-serif;
-            overflow: hidden;
-        }
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
 
-        @keyframes bgMove {
-            0% {
-                background-position: 0% 50%;
-            }
+.card{
+    width:min(92%,460px);
+    padding:40px;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(20px);
+    border-radius:30px;
+    text-align:center;
+    box-shadow:0 30px 80px rgba(0,0,0,0.25);
+    position:relative;
+    overflow:hidden;
+}
 
-            50% {
-                background-position: 100% 50%;
-            }
+.envelope{
+    font-size:75px;
+    margin-bottom:15px;
+}
 
-            100% {
-                background-position: 0% 50%;
-            }
-        }
+h2{
+    font-family:"Playfair Display",serif;
+    margin-bottom:25px;
+    color:#4a1c2f;
+}
 
-        /* Card */
-        .card {
-            width: min(92%, 420px);
-            padding: 40px 30px 45px;
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(18px);
-            border-radius: 28px;
-            text-align: center;
-            box-shadow:
-                0 30px 80px rgba(0, 0, 0, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-            position: relative;
-            animation: cardIn 1.1s ease;
-        }
+.buttons{
+    position:relative;
+    height:80px;
+}
 
-        @keyframes cardIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.95);
-            }
+button{
+    position:absolute;
+    padding:12px 30px;
+    border-radius:40px;
+    border:none;
+    font-size:15px;
+    cursor:pointer;
+    transition:.25s ease;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
+#openBtn{
+    left:10%;
+    background:linear-gradient(135deg,#ff4d6d,#ff758f);
+    color:white;
+}
 
-        /* Glow ring */
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            border-radius: 30px;
-            background: linear-gradient(120deg, #ff4d6d, #ff9a9e, #fbc2eb);
-            z-index: -1;
-            filter: blur(20px);
-            opacity: 0.7;
-        }
+#openBtn:hover{
+    transform:translateY(-3px);
+}
 
-        .emoji {
-            font-size: 68px;
-            margin-bottom: 12px;
-            animation: heartbeat 1.8s infinite;
-        }
+#noBtn{
+    left:55%;
+    background:white;
+    color:#777;
+}
 
-        @keyframes heartbeat {
+.letter{
+    margin-top:20px;
+    display:none;
+    font-family:"Playfair Display",serif;
+    font-size:17px;
+    line-height:1.7;
+    color:#5a2a3b;
+    animation:fadeIn 1.2s ease forwards;
+}
 
-            0%,
-            100% {
-                transform: scale(1);
-            }
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(15px);}
+    to{opacity:1; transform:translateY(0);}
+}
 
-            25% {
-                transform: scale(1.08);
-            }
+.heart{
+    position:absolute;
+    bottom:-20px;
+    animation:floatUp linear forwards;
+    pointer-events:none;
+}
 
-            50% {
-                transform: scale(1);
-            }
-
-            75% {
-                transform: scale(1.12);
-            }
-        }
-
-        h2 {
-            font-family: "Playfair Display", serif;
-            font-size: 28px;
-            color: #4a1c2f;
-            margin-bottom: 30px;
-            line-height: 1.35;
-        }
-
-        .buttons {
-            position: relative;
-            height: 78px;
-        }
-
-        button {
-            position: absolute;
-            padding: 14px 36px;
-            border-radius: 40px;
-            border: none;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        button:active {
-            transform: scale(0.94);
-        }
-
-        #yes {
-            left: 12%;
-            background: linear-gradient(135deg, #ff4d6d, #ff758f);
-            color: #fff;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.55);
-        }
-
-        #yes:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.7);
-        }
-
-        #no {
-            left: 55%;
-            background: rgba(255, 255, 255, 0.9);
-            color: #777;
-        }
-
-        .hint {
-            margin-top: 28px;
-            font-size: 13px;
-            color: #6b6b6b;
-            font-style: italic;
-        }
-
-        /* Floating depth hearts */
-        .heart {
-            position: absolute;
-            bottom: -20px;
-            animation: floatUp linear forwards;
-            pointer-events: none;
-            filter: blur(0.3px);
-        }
-
-        @keyframes floatUp {
-            from {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-
-            to {
-                transform: translateY(-120vh) scale(1.8);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 23px;
-            }
-
-            .emoji {
-                font-size: 58px;
-            }
-
-            button {
-                padding: 12px 28px;
-                font-size: 15px;
-            }
-
-            #yes {
-                left: 8%;
-            }
-
-            #no {
-                left: 55%;
-            }
-        }
-    </style>
+@keyframes floatUp{
+    from{transform:translateY(0);opacity:1;}
+    to{transform:translateY(-120vh);opacity:0;}
+}
+</style>
 </head>
 
 <body>
 
-    <div class="card">
-        <div class="emoji">🐱❤️</div>
-        <h2>Aditi,<br>will you be my Valentine?</h2>
+<div class="card" id="card">
+    <div class="envelope" id="envelope">💌</div>
+    <h2 id="question">Do you want to open this letter?</h2>
 
-        <div class="buttons">
-            <button id="yes">Yes 💖</button>
-            <button id="no">No 🙈</button>
-        </div>
-
-        <div class="hint">Some love stories don’t allow “no” ✨</div>
+    <div class="buttons">
+        <button id="openBtn">Open the Letter ✨</button>
+        <button id="noBtn">No 🙈</button>
     </div>
 
-    <!-- Sounds -->
-    <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-voice-laugh-343.mp3"></audio>
-    <audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+    <div class="letter" id="letter">
+        My Dear Bheannie,<br><br>
+        It all started with “People You May Know” sa IG, and now you mean the world to me. Who would have thought that a simple conversation that something so ordinary would become one of the greatest blessings God has ever placed in my life?
 
-    <script>
-        const noBtn = document.getElementById("no");
-        const yesBtn = document.getElementById("yes");
-        const card = document.querySelector(".card");
-        const hoverSound = document.getElementById("hoverSound");
-        const yesSound = document.getElementById("yesSound");
+Sometimes I look back and realize how mysterious and beautiful His plans are. There were moments when I didn’t understand why things had to pause, why distance had to happen, why you weren’t interested before (last year) 🤭, and why you even had to stop me from talking to you. Now I see it clearly that God was writing a better story than I could ever imagine. There’s this saying: “sometimes the person you’ve been searching for is already right beside you, and you don’t even realize it. But when the time is right, your paths cross.” tinuod jud ni since in the Bible it says, “When the time is right, I, the Lord, will make it happen.” and He truly did.
 
-        noBtn.addEventListener("mouseenter", () => {
-            hoverSound.currentTime = 0;
-            hoverSound.play();
+Last year, I honestly thought maybe our story just wasn’t meant to be. But when I sent you that simple “Happy New Year”, somethings changed. It was like God whispered “Now” and from that moment on, everything began to fall into place. Conversations became effortless, laughter became natural and now here we are talking endlessly, like there’s no ending to our words.
 
-            const cardRect = card.getBoundingClientRect();
-            const btnRect = noBtn.getBoundingClientRect();
+I realize that God wasn’t saying “No” He was teaching me how to wait. He was preparing our hearts so that everyhing we face would strengthen our faith and when He finally allowed our paths to cross again, everything made sense. That was the day our paths truly came together, not by coincidence, but because it was the right time.
 
-            const maxX = cardRect.width - btnRect.width - 10;
-            const maxY = cardRect.height - btnRect.height - 10;
+You are proof that God answers prayers in ways we don’t expect. You show me that His timing is perfect and that love can truly be patient and kind. I promise to take care of your heart gently and faithfully, especially because I know it has been hurt before. I want to love you in a way that fills your life with joy and makes you feel truly happy. I will pray for you, stand beside you through everything and grow with you in faith. If God is at the center of our story, I believe our love will always find its way.
 
-            noBtn.style.left = Math.random() * maxX + "px";
-            noBtn.style.top = Math.random() * maxY + "px";
-        });
+Thank you for giving me another chance to get to know you. I hope this time you’ll get to know me better 🤗. Thank you for eveything. Thank you for making me happy, thank you for being there with me even though wala pa nag kita personally hahaha
+Once again happy valentines day bheannieee ☺️
+I love you to the last digits of pi. ♾️💕
 
-        yesBtn.addEventListener("click", () => {
-            yesSound.play();
+    </div>
+</div>
 
-            confetti({
-                particleCount: 260,
-                spread: 120,
-                origin: { y: 0.65 }
-            });
+<script>
+const openBtn = document.getElementById("openBtn");
+const noBtn = document.getElementById("noBtn");
+const letter = document.getElementById("letter");
+const envelope = document.getElementById("envelope");
+const question = document.getElementById("question");
+const card = document.getElementById("card");
 
-            // Send email via FormSubmit
-            fetch("https://formsubmit.co/ajax/demo@gmail.com", {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: "She said YES! 💖"
-                })
-            })
-                .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.log(error));
+// Make NO button run away
+noBtn.addEventListener("mouseenter", () => {
+    const cardRect = card.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
 
-            setTimeout(() => {
-                alert("YAY 💕 I can’t wait for Valentine’s Day with you!");
-            }, 500);
-        });
+    const maxX = cardRect.width - btnRect.width - 10;
+    const maxY = cardRect.height - btnRect.height - 10;
 
-        function createHeart() {
-            const heart = document.createElement("div");
-            heart.className = "heart";
-            heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💗";
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.fontSize = Math.random() * 22 + 14 + "px";
-            heart.style.animationDuration = Math.random() * 3 + 4 + "s";
-            heart.style.opacity = Math.random() * 0.5 + 0.4;
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+});
 
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 8000);
-        }
+// Open letter
+openBtn.addEventListener("click", () => {
+    envelope.textContent = "📖";
+    question.textContent = "There's something for you...";
+    letter.style.display = "block";
 
-        setInterval(createHeart, 380);
-    </script>
+    openBtn.style.display = "none";
+    noBtn.style.display = "none";
+
+    confetti({
+        particleCount:250,
+        spread:120,
+        origin:{y:0.6}
+    });
+});
+
+// Floating hearts
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML=Math.random()>0.5?"❤️":"💗";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=Math.random()*20+15+"px";
+    heart.style.animationDuration=Math.random()*3+4+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),7000);
+}
+setInterval(createHeart,400);
+
+</script>
 
 </body>
-
 </html>
